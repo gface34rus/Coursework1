@@ -15,9 +15,8 @@ public class Main {
         System.out.println("Общая сумма трат на зарплату в месяц - " + calculateTotalSalary());
         System.out.println("Величина средней зарплаты составила - " + calculateAverageSalary());
         System.out.println("Сотрудник с минимальной зарплатой - " + findEmployeeWithMinSalary());
-        System.out.println("Сотрудник с максимальной зарплатой - "+findEmployeeWithMaxSalary());
+        System.out.println("Сотрудник с максимальной зарплатой - " + findEmployeeWithMaxSalary());
         printAllFullNames();
-
     }
 
     public static void printAllEmployees() {
@@ -73,6 +72,101 @@ public class Main {
         for (Employee employee : employees) {
             if (employee != null) {
                 System.out.println(employee.getFullName(employee));
+            }
+        }
+    }
+
+    public static void indexSalary(double percent) {
+        for (Employee employee : employees) {
+            if (employee != null) {
+                double currentSalary = employee.getSalary();
+                double newSalary = currentSalary * (1 + percent / 100);
+                employee.setSalary(newSalary);
+            }
+        }
+    }
+
+    public static Employee findEmployeeWithMinSalaryInDepartment(int department) {
+        Employee minSalaryEmployee = employees[0];
+        for (Employee employee : employees) {
+            if (employee != null &&
+                    employee.getDepartment() == department &&
+                    employee.getSalary() < minSalaryEmployee.getSalary()) {
+                minSalaryEmployee = employee;
+            }
+        }
+        return minSalaryEmployee;
+    }
+
+    public static Employee findEmployeeWithMaxSalaryInDepartment(int department) {
+        Employee maxSalaryEmployee = employees[0];
+        for (Employee employee : employees) {
+            if (employee != null &&
+                    employee.getDepartment() == department &&
+                    employee.getSalary() > maxSalaryEmployee.getSalary()) {
+                maxSalaryEmployee = employee;
+            }
+        }
+        return maxSalaryEmployee;
+    }
+
+    public static double calculateTotalSalaryInDepartment(int department) {
+        double totalSalary = 0;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                totalSalary += employee.getSalary();
+            }
+        }
+        return totalSalary;
+    }
+
+    public static double calculateAverageSalaryInDepartment(int department) {
+        double totalSalary = calculateTotalSalaryInDepartment(department);
+        int numEmployeesInDepartment = 0;
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                numEmployeesInDepartment++;
+            }
+        }
+        return numEmployeesInDepartment > 0 ? totalSalary / numEmployeesInDepartment : 0;
+    }
+
+    public static void indexSalaryInDepartment(int department, double percent) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                double currentSalary = employee.getSalary();
+                double newSalary = currentSalary * (1 + percent / 100);
+                employee.setSalary(newSalary);
+            }
+        }
+    }
+
+    public static void printAllEmployeesInDepartment(int department) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getDepartment() == department) {
+                System.out.println("id -" + employee.getId() +
+                        " ФИО - " + employee.getSurname() + " " + employee.getName() +
+                        " " + employee.getPatronymic() + " зарплата - " + employee.getSalary());
+            }
+        }
+    }
+
+    public static void printEmployeesWithSalaryBelow(double threshold) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getSalary() < threshold) {
+                System.out.println("id -" + employee.getId() +
+                        " ФИО - " + employee.getSurname() + " " + employee.getName() +
+                        " " + employee.getPatronymic() + " зарплата - " + employee.getSalary());
+            }
+        }
+    }
+
+    public static void printEmployeesWithSalaryAboveOrEqual(double threshold) {
+        for (Employee employee : employees) {
+            if (employee != null && employee.getSalary() >= threshold) {
+                System.out.println("id -" + employee.getId() +
+                        " ФИО - " + employee.getSurname() + " " + employee.getName() +
+                        " " + employee.getPatronymic() + " зарплата - " + employee.getSalary());
             }
         }
     }
