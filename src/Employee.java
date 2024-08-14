@@ -62,7 +62,7 @@ public class Employee {
         this.surname = surname;
     }
 
-    public String getFullName(Employee employee) {
+    public static String getFullName(Employee employee) {
         return "ФИО-" + employee.getSurname() + " " + employee.getName() + " " + employee.getPatronymic();
     }
 
